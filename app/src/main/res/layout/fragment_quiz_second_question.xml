@@ -135,7 +135,7 @@
         android:layout_margin="16dp"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:theme="@style/Theme.Quiz.First"
+        android:theme="@style/Theme.Quiz.Second"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
