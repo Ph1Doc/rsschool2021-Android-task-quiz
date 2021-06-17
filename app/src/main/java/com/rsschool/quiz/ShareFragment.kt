@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 
@@ -36,13 +37,35 @@ class ShareFragment: Fragment() {
         shareButton = view.findViewById(R.id.share)
         closeButton = view.findViewById(R.id.close)
 
+        var percent = arguments?.getInt(PERCENT_KEY) ?: 0
+        var result = arguments?.getStringArrayList(RESULT_KEY)
+
+//        Toast.makeText(context, "percent = " + " result =" + result, Toast.LENGTH_SHORT).show()
+
         shareButton?.setOnClickListener{
-            listener?.tapShare()
+            listener?.tapShare(result as ArrayList<String>, percent)
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun newInstance(answear: ArrayList<String>, percent: Int): ShareFragment {
+            val fragment = ShareFragment()
+            val args = Bundle()
+
+            args.putInt(PERCENT_KEY, percent)
+            args.putStringArrayList(RESULT_KEY, answear)
+
+            fragment.arguments = args
+            return fragment
+        }
+
+        private const val RESULT_KEY = "RESULT_KEY"
+        private const val PERCENT_KEY = "PERCENT_KEY"
+    }
+
     interface ShareListener {
-        fun tapShare()
+        fun tapShare(result: ArrayList<String>, percent: Int)
     }
 
 }
