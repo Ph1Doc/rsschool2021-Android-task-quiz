@@ -1,29 +1,27 @@
 package com.rsschool.quiz
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.databinding.FragmentShareBinding
 
 class ShareFragment: Fragment() {
 
-    private var backButton: AppCompatImageButton? = null
-    private var shareButton: AppCompatImageButton? = null
-    private var closeButton: AppCompatImageButton? = null
-
     private var listener: ShareListener? = null
+    private var _binding: FragmentShareBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.share_fragment, container, false)
+    ): View {
+        _binding = FragmentShareBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -31,41 +29,73 @@ class ShareFragment: Fragment() {
         listener = context as ShareListener
     }
 
+    @SuppressLint("SetTextI18n")
+    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        backButton = view.findViewById(R.id.back)
-        shareButton = view.findViewById(R.id.share)
-        closeButton = view.findViewById(R.id.close)
 
-        var percent = arguments?.getInt(PERCENT_KEY) ?: 0
-        var result = arguments?.getStringArrayList(RESULT_KEY)
+        val percent = calculatePercent()
+        val answerMap = arguments?.getSerializable(RESULT_MAP_KEY) as HashMap<String, String>
 
-//        Toast.makeText(context, "percent = " + " result =" + result, Toast.LENGTH_SHORT).show()
+        binding.result.text = "Your result: $percent %"
+        binding.result.textSize = 24f
 
-        shareButton?.setOnClickListener{
-            listener?.tapShare(result as ArrayList<String>, percent)
+        binding.share.setOnClickListener{
+            listener?.tapShare(answerMap, percent)
         }
+
+        binding.reset.setOnClickListener{
+            listener?.tapReset()
+        }
+
+        binding.close.setOnClickListener{
+            listener?.close()
+        }
+
+
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(answear: ArrayList<String>, percent: Int): ShareFragment {
+        fun newInstance(resultMap: HashMap<String, String>): ShareFragment {
             val fragment = ShareFragment()
             val args = Bundle()
 
-            args.putInt(PERCENT_KEY, percent)
-            args.putStringArrayList(RESULT_KEY, answear)
+            args.putSerializable(RESULT_MAP_KEY, resultMap)
 
             fragment.arguments = args
             return fragment
         }
 
-        private const val RESULT_KEY = "RESULT_KEY"
-        private const val PERCENT_KEY = "PERCENT_KEY"
+        private const val RESULT_MAP_KEY = "RESULT_MAP_KEY"
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun calculatePercent(): Int {
+        var percent = 0
+        val answerMap = arguments?.getSerializable(RESULT_MAP_KEY) as HashMap<String, String>
+        if (answerMap["1"] == "To be") {
+            percent += 20
+        }
+        if (answerMap["2"] == "Burj Khalifa, Dubai") {
+            percent += 20
+        }
+        if (answerMap["3"] == "Antarctic blue whale") {
+            percent += 20
+        }
+        if (answerMap["4"] == "Kotlin") {
+            percent += 20
+        }
+        if (answerMap["5"] == "42") {
+            percent += 20
+        }
+        return percent
     }
 
     interface ShareListener {
-        fun tapShare(result: ArrayList<String>, percent: Int)
+        fun tapShare(resultMap: HashMap<String, String>, percent: Int)
+        fun tapReset()
+        fun close()
     }
 
 }
