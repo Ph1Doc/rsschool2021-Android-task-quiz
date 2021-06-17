@@ -39,7 +39,7 @@ class ShareFragment: Fragment() {
         val answerMap = arguments?.getSerializable(RESULT_MAP_KEY) as HashMap<String, String>
 
         binding.result.text = "Your result: $percent %"
-        binding.result.textSize = 24f
+        binding.result.textSize = 26f
 
         binding.share.setOnClickListener{
             listener?.tapShare(answerMap, percent)

@@ -2,8 +2,10 @@ package com.rsschool.quiz
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.rsschool.quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), QuestionFragment.FirstQuestionListener, ShareFragment.ShareListener {
@@ -17,18 +19,34 @@ class MainActivity : AppCompatActivity(), QuestionFragment.FirstQuestionListener
         setContentView(binding.root)
 
         openQuestionFragment(1, hashMapOf())
+        setColor(1)
     }
 
     private fun openQuestionFragment(questionNumber:Int, resultMap: HashMap<String, String>) {
         val transaction = supportFragmentManager.beginTransaction()
         if (questionNumber == 6) {
             val share = ShareFragment.newInstance(resultMap)
+            setColor(questionNumber)
             transaction.replace(R.id.container, share)
         } else {
             val firstQuestion = QuestionFragment.newInstance(questionNumber, resultMap)
+            setColor(questionNumber)
             transaction.replace(R.id.container, firstQuestion)
         }
         transaction.commit()
+    }
+
+    private fun setColor(questionNumber: Int) {
+        val window: Window = this@MainActivity.window
+        when (questionNumber) {
+            1 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_orange_100_dark)}
+            2 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.yellow_100_dark)}
+            3 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.light_green_100_dark)}
+            4 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.cyan_100_dark)}
+            5 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_purple_100_dark)}
+            else -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_purple_100_dark)}
+        }
+
     }
 
     override fun tapPrevious(previousQuestionNumber: Int, resultMap: HashMap<String, String>) {
