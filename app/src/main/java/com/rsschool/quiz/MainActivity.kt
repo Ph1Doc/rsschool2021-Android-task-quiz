@@ -12,8 +12,7 @@ class MainActivity : AppCompatActivity(), QuestionFragment.FirstQuestionListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

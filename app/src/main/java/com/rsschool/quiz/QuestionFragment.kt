@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
@@ -104,8 +105,6 @@ class QuestionFragment: Fragment() {
             })
 
         }
-
-
     }
 
     override fun onDestroyView() {
@@ -118,12 +117,13 @@ class QuestionFragment: Fragment() {
         @JvmStatic
         fun newInstance(numberOfQuestion: Int, resultMap: HashMap<String, String>): QuestionFragment {
             val fragment = QuestionFragment()
-            val args = Bundle()
 
-            args.putInt(NEXT_QUESTION_NUMBER_KEY, numberOfQuestion)
-            args.putSerializable(RESULT_MAP_KEY, resultMap)
+            val bundle = bundleOf(
+                Pair(NEXT_QUESTION_NUMBER_KEY, numberOfQuestion),
+                Pair(RESULT_MAP_KEY, resultMap)
+            )
 
-            fragment.arguments = args
+            fragment.arguments = bundle
             return fragment
         }
 
@@ -271,5 +271,4 @@ class QuestionFragment: Fragment() {
         fun tapPrevious(previousQuestionNumber: Int, resultMap: HashMap<String, String>)
         fun close()
     }
-
 }

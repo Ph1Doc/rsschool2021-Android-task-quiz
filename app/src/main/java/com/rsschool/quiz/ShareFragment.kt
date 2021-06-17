@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentShareBinding
 
@@ -51,19 +52,18 @@ class ShareFragment: Fragment() {
         binding.close.setOnClickListener{
             listener?.close()
         }
-
-
     }
 
     companion object {
         @JvmStatic
         fun newInstance(resultMap: HashMap<String, String>): ShareFragment {
             val fragment = ShareFragment()
-            val args = Bundle()
 
-            args.putSerializable(RESULT_MAP_KEY, resultMap)
+            val bundle = bundleOf(
+                Pair(RESULT_MAP_KEY, resultMap)
+            )
 
-            fragment.arguments = args
+            fragment.arguments = bundle
             return fragment
         }
 
@@ -97,5 +97,4 @@ class ShareFragment: Fragment() {
         fun tapReset()
         fun close()
     }
-
 }
