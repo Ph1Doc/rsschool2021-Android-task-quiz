@@ -135,113 +135,60 @@ class QuestionFragment: Fragment() {
     fun setupQuestionFragment(numberOfQuestion: Int, answerMap: HashMap<String, String>) {
         when (numberOfQuestion) {
             1 -> {
-                binding.toolbar.title = "Question 1"
                 binding.toolbar.navigationIcon = null
-
-                binding.previousButton.isClickable = false
-                binding.previousButton.isEnabled = false
-
                 binding.question.text = "To be or not to be..."
-
-                binding.optionOne.text = "To be"
-                binding.optionTwo.text = "Not to be"
-                binding.optionThree.text = "It's not my problem"
-                binding.optionFour.text = "I don't know"
-                binding.optionFive.text = "...that is the question"
-
-                if (answerMap["1"]?.isNotEmpty() == true) {
-                    for (i in binding.radioGroup) {
-                        if ((i as RadioButton).text == answerMap["1"]) {
-                            i.isChecked = true
-                            binding.nextButton.isEnabled = true
-                        }
-                    }
-                }
+                val arrayButtonsText = arrayListOf(
+                    "To be",
+                    "Not to be",
+                    "It's not my problem",
+                    "I don't know",
+                    "...that is the question")
+                setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
 
             }
             2 -> {
-                binding.toolbar.title = "Question 2"
-
                 binding.question.text = "Tallest skyscraper:"
-
-                binding.optionOne.text = "Shanghai Tower, Shanghai"
-                binding.optionTwo.text = "Burj Khalifa, Dubai"
-                binding.optionThree.text = "Trump International Hotel, Chicago"
-                binding.optionFour.text = "Central Park Tower, New York"
-                binding.optionFive.text = "Eiffel Tower, Paris"
-
-                if (answerMap["2"]?.isNotEmpty() == true) {
-                    for (i in binding.radioGroup) {
-                        if ((i as RadioButton).text == answerMap["2"]) {
-                            i.isChecked = true
-                            binding.nextButton.isEnabled = true
-                        }
-                    }
-                }
+                val arrayButtonsText = arrayListOf(
+                    "Shanghai Tower, Shanghai",
+                    "Burj Khalifa, Dubai",
+                    "Trump International Hotel, Chicago",
+                    "Central Park Tower, New York",
+                    "Eiffel Tower, Paris")
+                setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
             }
 
             3 -> {
-                binding.toolbar.title = "Question 3"
-
                 binding.question.text = "The biggest animal:"
-
-                binding.optionOne.text = "Cat"
-                binding.optionTwo.text = "Elephant"
-                binding.optionThree.text = "Kitti's hog-nosed bat"
-                binding.optionFour.text = "Antarctic blue whale"
-                binding.optionFive.text = "Human"
-
-                if (answerMap["3"]?.isNotEmpty() == true) {
-                    for (i in binding.radioGroup) {
-                        if ((i as RadioButton).text == answerMap["3"]) {
-                            i.isChecked = true
-                            binding.nextButton.isEnabled = true
-                        }
-                    }
-                }
+                val arrayButtonsText = arrayListOf(
+                    "Cat",
+                    "Elephant",
+                    "Kitti's hog-nosed bat",
+                    "Antarctic blue whale",
+                    "Human")
+                setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
             }
 
             4 -> {
-                binding.toolbar.title = "Question 4"
-
                 binding.question.text = "What's superfluous:"
-
-                binding.optionOne.text = "Discord"
-                binding.optionTwo.text = "Slack"
-                binding.optionThree.text = "Kotlin"
-                binding.optionFour.text = "MicrosoftTeams"
-                binding.optionFive.text = "Telegram"
-
-                if (answerMap["4"]?.isNotEmpty() == true) {
-                    for (i in binding.radioGroup) {
-                        if ((i as RadioButton).text == answerMap["4"]) {
-                            i.isChecked = true
-                            binding.nextButton.isEnabled = true
-                        }
-                    }
-                }
+                val arrayButtonsText = arrayListOf(
+                    "Discord",
+                    "Slack",
+                    "Kotlin",
+                    "MicrosoftTeams",
+                    "Telegram")
+                setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
             }
 
             5 -> {
-                binding.toolbar.title = "Question 5"
                 binding.nextButton.text = "SUBMIT"
-
                 binding.question.text = "The Answer to the Ultimate Question of Life, The Universe, and Everything is:"
-
-                binding.optionOne.text = "33"
-                binding.optionTwo.text = "11"
-                binding.optionThree.text = "7"
-                binding.optionFour.text = "0"
-                binding.optionFive.text = "42"
-
-                if (answerMap["5"]?.isNotEmpty() == true) {
-                    for (i in binding.radioGroup) {
-                        if ((i as RadioButton).text == answerMap["5"]) {
-                            i.isChecked = true
-                            binding.nextButton.isEnabled = true
-                        }
-                    }
-                }
+                val arrayButtonsText = arrayListOf(
+                    "33",
+                    "11",
+                    "7",
+                    "0",
+                    "42")
+                setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
             }
         }
     }
@@ -262,6 +209,29 @@ class QuestionFragment: Fragment() {
             }
             5 -> {
                 inflater.context.setTheme(R.style.Theme_Quiz_Fifth)
+            }
+        }
+    }
+
+    private fun setButtonText(numberOfQuestion: Int, buttonsText: ArrayList<String>, answerMap: HashMap<String, String>) {
+
+        binding.toolbar.title = "Question $numberOfQuestion"
+
+        binding.previousButton.isClickable = false
+        binding.previousButton.isEnabled = false
+
+        binding.optionOne.text = buttonsText[0]
+        binding.optionTwo.text = buttonsText[1]
+        binding.optionThree.text = buttonsText[2]
+        binding.optionFour.text = buttonsText[3]
+        binding.optionFive.text = buttonsText[4]
+
+        if (answerMap[numberOfQuestion.toString()]?.isNotEmpty() == true) {
+            for (i in binding.radioGroup) {
+                if ((i as RadioButton).text == answerMap[numberOfQuestion.toString()]) {
+                    i.isChecked = true
+                    binding.nextButton.isEnabled = true
+                }
             }
         }
     }
