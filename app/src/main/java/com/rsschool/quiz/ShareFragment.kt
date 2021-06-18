@@ -54,6 +54,11 @@ class ShareFragment: Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(resultMap: HashMap<String, String>): ShareFragment {
