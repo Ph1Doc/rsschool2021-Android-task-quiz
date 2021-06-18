@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
+import androidx.core.view.get
 import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
@@ -220,11 +221,9 @@ class QuestionFragment: Fragment() {
         binding.previousButton.isClickable = false
         binding.previousButton.isEnabled = false
 
-        binding.optionOne.text = buttonsText[0]
-        binding.optionTwo.text = buttonsText[1]
-        binding.optionThree.text = buttonsText[2]
-        binding.optionFour.text = buttonsText[3]
-        binding.optionFive.text = buttonsText[4]
+        for (i in buttonsText) {
+            (binding.radioGroup[buttonsText.indexOf(i)] as RadioButton).text = i
+        }
 
         if (answerMap[numberOfQuestion.toString()]?.isNotEmpty() == true) {
             for (i in binding.radioGroup) {
