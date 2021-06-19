@@ -2,6 +2,7 @@ package com.rsschool.quiz
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,12 @@ class ShareFragment: Fragment() {
 
         binding.result.text = "Your result: $percent %"
         binding.result.textSize = 26f
+
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            binding.reset.setBackgroundColor(0)
+            binding.share.setBackgroundColor(0)
+            binding.close.setBackgroundColor(0)
+        }
 
         binding.share.setOnClickListener{
             listener?.tapShare(answerMap, percent)

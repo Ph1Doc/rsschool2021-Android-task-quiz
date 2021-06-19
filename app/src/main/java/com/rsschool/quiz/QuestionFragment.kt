@@ -2,6 +2,7 @@ package com.rsschool.quiz
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -137,6 +138,8 @@ class QuestionFragment: Fragment() {
         when (numberOfQuestion) {
             1 -> {
                 binding.toolbar.navigationIcon = null
+                binding.previousButton.isClickable = false
+                binding.previousButton.isEnabled = false
                 binding.question.text = "To be or not to be..."
                 val arrayButtonsText = arrayListOf(
                     "To be",
@@ -145,7 +148,9 @@ class QuestionFragment: Fragment() {
                     "I don't know",
                     "...that is the question")
                 setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
-
+                if (isDarkTheme()) {
+                    binding.toolbar.setBackgroundResource(R.color.deep_orange_100_dark)
+                }
             }
             2 -> {
                 binding.question.text = "Tallest skyscraper:"
@@ -156,6 +161,9 @@ class QuestionFragment: Fragment() {
                     "Central Park Tower, New York",
                     "Eiffel Tower, Paris")
                 setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
+                if (isDarkTheme()) {
+                    binding.toolbar.setBackgroundResource(R.color.yellow_100_dark)
+                }
             }
 
             3 -> {
@@ -167,6 +175,9 @@ class QuestionFragment: Fragment() {
                     "Antarctic blue whale",
                     "Human")
                 setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
+                if (isDarkTheme()) {
+                    binding.toolbar.setBackgroundResource(R.color.light_green_100_dark)
+                }
             }
 
             4 -> {
@@ -178,6 +189,9 @@ class QuestionFragment: Fragment() {
                     "MicrosoftTeams",
                     "Telegram")
                 setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
+                if (isDarkTheme()) {
+                    binding.toolbar.setBackgroundResource(R.color.cyan_100_dark)
+                }
             }
 
             5 -> {
@@ -190,6 +204,9 @@ class QuestionFragment: Fragment() {
                     "0",
                     "42")
                 setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
+                if (isDarkTheme()) {
+                    binding.toolbar.setBackgroundResource(R.color.deep_purple_100_dark)
+                }
             }
         }
     }
@@ -214,12 +231,13 @@ class QuestionFragment: Fragment() {
         }
     }
 
+    private fun isDarkTheme(): Boolean {
+        return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
+
     private fun setButtonText(numberOfQuestion: Int, buttonsText: ArrayList<String>, answerMap: HashMap<String, String>) {
 
         binding.toolbar.title = "Question $numberOfQuestion"
-
-        binding.previousButton.isClickable = false
-        binding.previousButton.isEnabled = false
 
         for (i in buttonsText) {
             (binding.radioGroup[buttonsText.indexOf(i)] as RadioButton).text = i

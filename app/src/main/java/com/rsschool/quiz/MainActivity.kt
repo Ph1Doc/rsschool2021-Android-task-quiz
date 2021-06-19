@@ -1,6 +1,7 @@
 package com.rsschool.quiz
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
@@ -38,15 +39,25 @@ class MainActivity : AppCompatActivity(), QuestionFragment.FirstQuestionListener
 
     private fun setColor(questionNumber: Int) {
         val window: Window = this@MainActivity.window
-        when (questionNumber) {
-            1 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_orange_100_dark)}
-            2 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.yellow_100_dark)}
-            3 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.light_green_100_dark)}
-            4 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.cyan_100_dark)}
-            5 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_purple_100_dark)}
-            else -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_purple_100_dark)}
-        }
+        supportActionBar?.hide()
+            when (questionNumber) {
+                1 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_orange_100_dark) }
+                2 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.yellow_100_dark)}
+                3 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.light_green_100_dark)}
+                4 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.cyan_100_dark)}
+                5 -> { window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_purple_100_dark)}
+                else -> {
+                    if (isDarkTheme()) {
+                        window.statusBarColor = 0
+                    } else {
+                        window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.deep_purple_100_dark)
+                    }
+                }
+            }
+    }
 
+    private fun isDarkTheme(): Boolean {
+        return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 
     override fun tapPrevious(previousQuestionNumber: Int, resultMap: HashMap<String, String>) {
