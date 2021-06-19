@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentShareBinding
@@ -23,6 +24,12 @@ class ShareFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShareBinding.inflate(inflater, container, false)
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            requireActivity().window.statusBarColor = 0
+        } else {
+            requireActivity().window.statusBarColor = ContextCompat.getColor(context as Context, R.color.deep_purple_100_dark)
+        }
+
         return binding.root
     }
 

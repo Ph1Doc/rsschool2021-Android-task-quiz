@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.core.view.iterator
@@ -148,6 +149,7 @@ class QuestionFragment: Fragment() {
                     "I don't know",
                     "...that is the question")
                 setButtonText(numberOfQuestion, arrayButtonsText, answerMap)
+
                 if (isDarkTheme()) {
                     binding.toolbar.setBackgroundResource(R.color.deep_orange_100_dark)
                 }
@@ -215,18 +217,23 @@ class QuestionFragment: Fragment() {
         when (numberOfQuestion) {
             1 -> {
                 inflater.context.setTheme(R.style.Theme_Quiz_First)
+                requireActivity().window.statusBarColor = ContextCompat.getColor(context as Context, R.color.deep_orange_100_dark)
             }
             2 -> {
                 inflater.context.setTheme(R.style.Theme_Quiz_Second)
+                requireActivity().window.statusBarColor = ContextCompat.getColor(context as Context, R.color.yellow_100_dark)
             }
             3 -> {
                 inflater.context.setTheme(R.style.Theme_Quiz_Third)
+                requireActivity().window.statusBarColor = ContextCompat.getColor(context as Context, R.color.light_green_100_dark)
             }
             4 -> {
                 inflater.context.setTheme(R.style.Theme_Quiz_Fourth)
+                requireActivity().window.statusBarColor = ContextCompat.getColor(context as Context, R.color.cyan_100_dark)
             }
             5 -> {
                 inflater.context.setTheme(R.style.Theme_Quiz_Fifth)
+                requireActivity().window.statusBarColor = ContextCompat.getColor(context as Context, R.color.deep_purple_100_dark)
             }
         }
     }
